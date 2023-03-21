@@ -1,0 +1,24 @@
+<main class="container mb-4">
+    <h1 class="is-size-1 has-text-centered">To-do List</h1>
+    <div class="content">
+        <button class="button is-primary is-uppercase" (click)="addTask()">+</button>
+        <div class="columns is-flex is-flex-direction-column is-align-items-center">
+            <ol class="column is-half">
+                <li *ngFor="let task of tasks; index as index" [ngClass]="taskClass(task)" class="task box has-text-centered mt-2">
+                    <label class="columns" [for]="'finished' + index">
+                        <label class="checkbox">
+                            <input [id]="'finished' + index" type="checkbox" [(ngModel)]="task.finished" hidden>
+                        </label>
+                        <div class="column">
+                            <span *ngIf="task !== editing" (click)="editStart($event, task, index)"> {{ task.name }}</span>
+                            <input [id]="'editing' + index" *ngIf="task === editing" type="text" (blur)="editFinish()" (keyup.enter)="editFinish()" [(ngModel)]="task.name">
+                        </div>
+                    </label>
+                </li>
+            </ol>
+        </div>
+        <span class="has-text-weight-bold">Completed: </span>
+        <span class="is-italic" *ngIf="!getCompleted().length">None</span>
+        <span *ngFor="let task of getCompleted(); last as last">{{ task.name + (last ? "" : ", ")}}</span>
+    </div>
+</main>

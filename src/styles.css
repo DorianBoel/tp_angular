@@ -1,2 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bulma/css/bulma.min.css';
+
+.strikethrough {
+    text-decoration: line-through;
+    text-decoration-thickness: .1rem;
+}
+
+.task, .task > label {
+    cursor: pointer;
+}
+
+.task div span {
+    cursor: text;
+}
+
+.task:hover {
+    background-color: #f9f9f9;
+}
+
+.task.has-background-light {
+    opacity: .5;
+}
+
+.task.has-background-light:hover {
+    background-color: #eee !important;
+}
