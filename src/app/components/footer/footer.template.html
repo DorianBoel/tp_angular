@@ -1,0 +1,4 @@
+<hr>
+<span class="has-text-weight-bold">Completed: </span>
+<span class="is-italic" *ngIf="!getFinishedTasks().length">None</span>
+<span *ngFor="let task of getFinishedTasks(); last as last">{{ task.name + (last ? "" : ", ")}}</span>

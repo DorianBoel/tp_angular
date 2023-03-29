@@ -1,43 +1,61 @@
-import { Component } from "@angular/core";
-import { Task } from "./task";
+import { Component, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { TaskService } from "src/app/shared/services/task.service";
+import { Task } from "../../shared/models/task";
 
 @Component({
     selector: "app-todo-list",
     templateUrl: "todo-list.template.html",
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnDestroy {
+
+    private _subscription: Subscription;
 
     editing: Task | null = null;
 
-    tasks: Task[] = [
-        { name: "TODO 1", finished: true },
-        { name: "TODO 2", finished: false },
-        { name: "TODO 3", finished: false },
-    ];
+    tasks: Task[] = [];
 
-    getCompleted(): Task[] {
-        return this.tasks.filter((el) => el.finished);
+    constructor(private _taskService: TaskService) {
+        this._subscription = this._taskService.getSubscription((tasks) => this.tasks = tasks);
     }
 
-    editStart(evt: MouseEvent, task: Task, index: number): void {
-        evt.preventDefault();
+    addTask(): void {
+        let name = `TODO ${this.tasks.length + 1}`
+        this._taskService.addTask(name);
+    }
+
+    toggleFinished(task: Task): void {
+        if (this.editing !== task) {
+            task.finished = !task.finished;
+            this._taskService.updateTask(task);
+        }
+    }
+
+    editStart(task: Task, index: number): void {
         this.editing = task;
         setTimeout(() => document.getElementById(`editing${index}`)?.focus());
     }
 
     editFinish(): void {
-        this.editing = null;
+        if (this.editing !== null) {
+            this._taskService.updateTask(this.editing);
+            this.editing = null;
+        }
     }
 
-    taskClass(task: Task): { [klass: string]: any; } {
+    deleteTask(task: Task) {
+        this._taskService.deleteTask(task);
+    }
+
+    taskClassList(task: Task): { [klass: string]: any; } {
         return {
             "has-background-light": task.finished,
             "strikethrough": task.finished,
         }
     }
 
-    addTask(): void {
-        let name = `TODO ${this.tasks.length + 1}`
-        this.tasks.push({ name, finished: false });
-    }
+    ngOnDestroy() {
+        this._subscription.unsubscribe();
+    };
+
 }
