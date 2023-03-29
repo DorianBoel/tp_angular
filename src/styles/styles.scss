@@ -1,0 +1,55 @@
+// Mixins
+@mixin glassBg {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+//Classes
+.square {
+    border-radius: 15px;
+    background-color: black;
+    width: 150px;
+    height: 150px;
+}
+
+
+html, body {
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+header {
+    width: 100%;
+    position: fixed;
+    padding-left: .5rem;
+    padding-bottom: .5rem;
+    z-index: 2;
+    @include glassBg();
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+#colorPick:disabled {
+    opacity: 40%;
+}
+
+#squares {
+    position: relative;
+    top: 170px;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
