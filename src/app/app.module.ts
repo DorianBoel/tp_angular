@@ -7,7 +7,6 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./components/header/header.component";
-import { MainComponent } from "./components/main/main.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
 
@@ -15,7 +14,6 @@ import { TodoListComponent } from "./components/todo-list/todo-list.component";
     declarations: [
         FooterComponent,
         HeaderComponent,
-        MainComponent,
         AppComponent,
         TodoListComponent,
     ],
